@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import React from "react";
 
 const useImage = (fileName: string) => {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<any>(null);
-    const [image, setImage] = useState<string>();
+    const [loading, setLoading] = React.useState(true);
+    const [error, setError] = React.useState<any>(null);
+    const [image, setImage] = React.useState<string>();
 
-    useEffect(() => {
+    React.useEffect(() => {
         const fetchImage = async () => {
             try {
                 const response = await import("../img/" + fileName + ".png");

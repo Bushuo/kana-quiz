@@ -1,14 +1,11 @@
-import { Box, Button, Center, Stack } from "@chakra-ui/react";
-import { Text } from "@chakra-ui/react";
 import React from "react";
+import { Button, Stack } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import { ServiceContext } from "../App";
 import HiraImage from "./HiraImage";
+import { IQuizProps } from "../shared/types";
 
-type IQuizProps = {
-    onFinish: () => void;
-};
-
-function Quiz({ onFinish }: IQuizProps) {
+function MultipleChoiceQuiz({ onFinish }: IQuizProps) {
     const { store } = React.useContext(ServiceContext);
 
     const [points, setPoints] = React.useState(0);
@@ -80,4 +77,4 @@ function Quiz({ onFinish }: IQuizProps) {
     );
 }
 
-export default Quiz;
+export default MultipleChoiceQuiz;
