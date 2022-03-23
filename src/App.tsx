@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
+import CenterColumnLayout from "./components/CenterColumnLayout";
+import Quiz from "./components/Quiz";
+import StartQuiz from "./components/StartQuiz";
+import LocalStorageService from "./services/LocalStorageService";
+
+type ServiceContextType = {
+    store: LocalStorageService;
+};
+export const ServiceContext = React.createContext<ServiceContextType>(
+    null as unknown as ServiceContextType
+);
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [started, setStarted] = React.useState(false);
+    const [store] = React.useState(new LocalStorageService());
+    useEffect(() => {
+        store.initalize();
+    }, [store]);
+
+    return (
+        <ServiceContext.Provider value={{ store }}>
+            <CenterColumnLayout>
+                {started ? (
+                    <Quiz onFinish={() => setStarted(false)} />
+                ) : (
+                    <StartQuiz onStart={() => setStarted(true)} />
+                )}
+            </CenterColumnLayout>
+        </ServiceContext.Provider>
+    );
 }
 
 export default App;
