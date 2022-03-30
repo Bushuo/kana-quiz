@@ -1,11 +1,12 @@
 import React from "react";
 import { Button, Stack } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
-import { ServiceContext } from "../App";
+import { ServiceContext } from "../routes";
 import HiraImage from "./HiraImage";
-import { IQuizProps } from "../shared/types";
+import { useNavigate } from "react-router-dom";
 
-function MultipleChoiceQuiz({ onFinish }: IQuizProps) {
+function MultipleChoiceQuiz() {
+    const navigate = useNavigate();
     const { store } = React.useContext(ServiceContext);
 
     const [points, setPoints] = React.useState(0);
@@ -29,7 +30,7 @@ function MultipleChoiceQuiz({ onFinish }: IQuizProps) {
         setPoints(newPoints);
 
         if (newPoints === 10) {
-            setTimeout(onFinish, timeout);
+            setTimeout(() => navigate("/"), timeout);
             return;
         }
 

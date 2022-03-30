@@ -1,16 +1,19 @@
 import React from "react";
 import { Button } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 
 interface IStartQuizProps {
-    onStart: () => void;
+    to: string;
     text: string;
 }
 
-function StartQuiz({ onStart, text }: IStartQuizProps) {
+function StartQuiz({ to, text }: IStartQuizProps) {
     return (
-        <Button w="150px" mt="2" onClick={onStart}>
-            {text}
-        </Button>
+        <Link to={to}>
+            <Button w="150px" mt="2">
+                {text}
+            </Button>
+        </Link>
     );
 }
 

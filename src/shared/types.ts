@@ -1,3 +1,1 @@
-export type IQuizProps = {
-    onFinish: () => void;
-};
+export {};

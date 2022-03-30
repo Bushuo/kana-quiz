@@ -1,10 +1,11 @@
 import { Input, Stack, Text } from "@chakra-ui/react";
 import React from "react";
-import { ServiceContext } from "../App";
-import { IQuizProps } from "../shared/types";
+import { useNavigate } from "react-router-dom";
+import { ServiceContext } from "../routes";
 import HiraImage from "./HiraImage";
 
-function TextInputQuiz({ onFinish }: IQuizProps) {
+function TextInputQuiz() {
+    const navigate = useNavigate();
     const { store } = React.useContext(ServiceContext);
     const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -29,7 +30,7 @@ function TextInputQuiz({ onFinish }: IQuizProps) {
         setPoints(newPoints);
 
         if (newPoints === 10) {
-            setTimeout(onFinish, timeout);
+            setTimeout(() => navigate("/"), timeout);
             return;
         }
 
