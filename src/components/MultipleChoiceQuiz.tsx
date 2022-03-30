@@ -1,43 +1,12 @@
-import React from "react";
 import { Button, Stack } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
-import { ServiceContext } from "../routes";
 import HiraImage from "./HiraImage";
-import { useNavigate } from "react-router-dom";
+import useQuiz from "../hooks/useQuiz";
 
 function MultipleChoiceQuiz() {
-    const navigate = useNavigate();
-    const { store } = React.useContext(ServiceContext);
-
-    const [points, setPoints] = React.useState(0);
-    const [question, setQuestion] = React.useState(() =>
-        store.getHiraQuestion()
+    const { question, points, processAnswer, correctness } = useQuiz(
+        () => void 0
     );
-    const [correctness, setCorrectness] = React.useState<boolean | undefined>(
-        undefined
-    );
-
-    const processAnswer = (answer: string) => {
-        store.processAnswer(answer, question);
-
-        const isCorrect = store.isCorrect(answer, question);
-        const newPoints = isCorrect ? points + 1 : points;
-        const timeout = isCorrect ? 1000 : 3000;
-        const nextQuestion = store.getHiraQuestion(question);
-
-        setCorrectness(isCorrect);
-        setPoints(newPoints);
-
-        if (newPoints === 10) {
-            setTimeout(() => navigate("/"), timeout);
-            return;
-        }
-
-        setTimeout(() => {
-            setCorrectness(undefined);
-            setQuestion(nextQuestion);
-        }, timeout);
-    };
 
     return (
         <>

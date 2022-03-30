@@ -1,46 +1,15 @@
 import { Heading, Input, Stack, Text } from "@chakra-ui/react";
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { ServiceContext } from "../routes";
+import useQuiz from "../hooks/useQuiz";
 import HiraImage from "./HiraImage";
 
 function TextInputQuiz() {
-    const navigate = useNavigate();
-    const { store } = React.useContext(ServiceContext);
     const inputRef = React.useRef<HTMLInputElement>(null);
-
-    const [points, setPoints] = React.useState(0);
-    const [question, setQuestion] = React.useState(() =>
-        store.getHiraQuestion()
-    );
-    const [correctness, setCorrectness] = React.useState<boolean | undefined>(
-        undefined
-    );
-
-    const processAnswer = async (answer: string) => {
-        store.processAnswer(answer, question);
-
-        const isCorrect = store.isCorrect(answer, question);
-        const newPoints = isCorrect ? points + 1 : points;
-        const timeout = isCorrect ? 1000 : 3000;
-        const nextQuestion = store.getHiraQuestion(question);
-
-        setCorrectness(isCorrect);
-        setPoints(newPoints);
-
-        if (newPoints === 10) {
-            setTimeout(() => navigate("/"), timeout);
-            return;
+    const { question, points, processAnswer, correctness } = useQuiz(() => {
+        if (inputRef.current) {
+            inputRef.current.value = "";
         }
-
-        setTimeout(() => {
-            setCorrectness(undefined);
-            setQuestion(nextQuestion);
-            if (inputRef.current) {
-                inputRef.current.value = "";
-            }
-        }, timeout);
-    };
+    });
 
     return (
         <>
