@@ -1,4 +1,4 @@
-import { Input, Stack, Text } from "@chakra-ui/react";
+import { Heading, Input, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ServiceContext } from "../routes";
@@ -49,14 +49,16 @@ function TextInputQuiz() {
                 {points}
             </Text>
             <HiraImage url={question.hira.url} />
-            <Stack alignItems="center" width="200px" height="50px">
+            <Stack alignItems="center" width="200px" height="60px">
                 {correctness !== undefined ? (
                     correctness ? (
                         <Text fontSize="xl">Correct!</Text>
                     ) : (
                         <>
                             <Text fontSize="lg">Wrong!</Text>
-                            <Text fontSize="lg">{question.hira.name}</Text>
+                            <Heading fontSize="xl">
+                                {question.hira.name}
+                            </Heading>
                         </>
                     )
                 ) : (
