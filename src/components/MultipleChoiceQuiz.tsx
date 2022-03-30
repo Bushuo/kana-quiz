@@ -17,7 +17,7 @@ function MultipleChoiceQuiz({ onFinish }: IQuizProps) {
         undefined
     );
 
-    const processAnswer = async (answer: string) => {
+    const processAnswer = (answer: string) => {
         store.processAnswer(answer, question);
 
         const isCorrect = store.isCorrect(answer, question);

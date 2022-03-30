@@ -3,7 +3,7 @@ import CenterColumnLayout from "./components/CenterColumnLayout";
 import MultipleChoiceQuiz from "./components/MultipleChoiceQuiz";
 import StartQuiz from "./components/StartQuiz";
 import LocalStorageService from "./services/LocalStorageService";
-import { Text } from "@chakra-ui/react";
+import { Heading } from "@chakra-ui/react";
 import TextInputQuiz from "./components/TextInputQuiz";
 
 type ServiceContextType = {
@@ -34,9 +34,7 @@ function App() {
                         case QuizState.Menu:
                             return (
                                 <>
-                                    <Text fontSize="2xl" mb="10">
-                                        Kana Quiz
-                                    </Text>
+                                    <Heading>Kana Quiz</Heading>
                                     <StartQuiz
                                         text="Multiple Choice"
                                         onStart={() =>
