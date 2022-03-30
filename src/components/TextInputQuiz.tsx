@@ -10,10 +10,9 @@ function TextInputQuiz() {
     const inputRef = React.useRef<HTMLInputElement>(null);
 
     const [points, setPoints] = React.useState(0);
-    const [question, setQuestion] = React.useState(() => {
-        const question = store.getHiraQuestion();
-        return question;
-    });
+    const [question, setQuestion] = React.useState(() =>
+        store.getHiraQuestion()
+    );
     const [correctness, setCorrectness] = React.useState<boolean | undefined>(
         undefined
     );
@@ -24,7 +23,7 @@ function TextInputQuiz() {
         const isCorrect = store.isCorrect(answer, question);
         const newPoints = isCorrect ? points + 1 : points;
         const timeout = isCorrect ? 1000 : 3000;
-        const nextQuestion = store.getHiraQuestion();
+        const nextQuestion = store.getHiraQuestion(question);
 
         setCorrectness(isCorrect);
         setPoints(newPoints);

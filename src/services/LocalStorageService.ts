@@ -63,9 +63,9 @@ export default class LocalStorageService {
         return statistics;
     }
 
-    public getHiraQuestion(): Question {
+    public getHiraQuestion(previos?: Question): Question {
         const hiraganas = this.get<HiraStorageObj>(HIRA_STORAGE_KEY)!;
-        const hira = this.getRandomHira(hiraganas);
+        const hira = this.getWorstHira(hiraganas, previos?.hira);
         const answers = this.getRandomAnswers(hiraganas, hira);
 
         const question: Question = {
@@ -133,11 +133,27 @@ export default class LocalStorageService {
         return arr;
     }
 
+    private getWorstHira(
+        hiraganas: HiraStorageObj,
+        previos?: Hiragana
+    ): Hiragana {
+        const arr: Hiragana[] = [];
+        for (const value of Object.values(hiraganas).sort(
+            (a, b) => this.hitRatio(a) - this.hitRatio(b)
+        )) {
+            arr.push(value);
+        }
+
+        if (previos) {
+            return arr.filter((h) => h.name !== previos.name)[0];
+        }
+
+        return arr[0];
+    }
+
     private getRandomHira(hiraganas: HiraStorageObj): Hiragana {
         const arr: Hiragana[] = [];
-        for (const [key, value] of Object.entries(hiraganas).filter(
-            ([_, value]) => value.hits < 10
-        )) {
+        for (const value of Object.values(hiraganas)) {
             arr.push(value);
         }
 
