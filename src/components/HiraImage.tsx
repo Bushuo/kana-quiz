@@ -1,8 +1,10 @@
 import React from "react";
-import { Alert, AlertIcon, Image, Spinner } from "@chakra-ui/react";
+import { Alert, AlertIcon, Image, ImageProps, Spinner } from "@chakra-ui/react";
 import useImage from "../hooks/useImage";
 
-function HiraImage({ url }: { url: string }) {
+type ImageSize = ImageProps["boxSize"];
+
+function HiraImage({ url, size = "150px" }: { url: string; size?: ImageSize }) {
     const { loading, error, image } = useImage(url);
 
     if (loading) {
@@ -17,7 +19,15 @@ function HiraImage({ url }: { url: string }) {
         );
     }
 
-    return <Image boxSize="150px" src={image} alt="question" />;
+    return (
+        <Image
+            justifySelf="center"
+            alignSelf="center"
+            boxSize={size}
+            src={image}
+            alt="question"
+        />
+    );
 }
 
 export default HiraImage;

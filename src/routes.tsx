@@ -5,6 +5,7 @@ import LocalStorageService from "./services/LocalStorageService";
 import Menu from "./components/Menu";
 import MultipleChoiceQuiz from "./components/MultipleChoiceQuiz";
 import TextInputQuiz from "./components/TextInputQuiz";
+import Statistics from "./components/Statistics";
 
 type ServiceContextType = {
     store: LocalStorageService;
@@ -21,16 +22,17 @@ function Routes() {
 
     return (
         <ServiceContext.Provider value={{ store }}>
-            <CenterColumnLayout>
-                <RRRoutes>
+            <RRRoutes>
+                <Route element={<CenterColumnLayout />}>
                     <Route path="/" element={<Menu />} />
                     <Route
                         path="/multiple-choice"
                         element={<MultipleChoiceQuiz />}
                     />
                     <Route path="/text-input" element={<TextInputQuiz />} />
-                </RRRoutes>
-            </CenterColumnLayout>
+                </Route>
+                <Route path="/statistics" element={<Statistics />} />
+            </RRRoutes>
         </ServiceContext.Provider>
     );
 }

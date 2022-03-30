@@ -1,7 +1,7 @@
 import { Flex } from "@chakra-ui/react";
-import React from "react";
+import { Outlet } from "react-router-dom";
 
-function CenterColumnLayout({ children }: React.PropsWithChildren<{}>) {
+function CenterColumnLayout() {
     return (
         <Flex
             height="100vh"
@@ -9,7 +9,7 @@ function CenterColumnLayout({ children }: React.PropsWithChildren<{}>) {
             justifyContent="center"
             alignItems="center"
         >
-            {children}
+            <Outlet />
         </Flex>
     );
 }

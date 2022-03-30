@@ -34,15 +34,33 @@ export default class LocalStorageService {
         this.storage.setItem(key, JSON.stringify(value));
     }
 
-    public initalize() {
-        if (this.get<HiraStorageObj>(HIRA_STORAGE_KEY)) {
-            return;
-        }
+    clear(): void {
         const storageObject: HiraStorageObj = {};
         for (const hira of Hiraganas) {
             storageObject[hira.name] = hira;
         }
         this.set(HIRA_STORAGE_KEY, storageObject);
+    }
+
+    public initalize() {
+        if (this.get<HiraStorageObj>(HIRA_STORAGE_KEY)) {
+            return;
+        }
+        this.clear();
+    }
+
+    public getStatistics() {
+        const hiraganas = this.get<HiraStorageObj>(HIRA_STORAGE_KEY)!;
+        const statistics = Object.values(hiraganas)
+            .map((h) => ({
+                name: h.name,
+                url: h.url,
+                hits: h.hits,
+                misses: h.misses,
+                hitRatio: this.hitRatio(h),
+            }))
+            .sort((a, b) => a.hitRatio - b.hitRatio);
+        return statistics;
     }
 
     public getHiraQuestion(): Question {
@@ -74,6 +92,14 @@ export default class LocalStorageService {
         const hiraganas = this.get<HiraStorageObj>(HIRA_STORAGE_KEY)!;
         hiraganas[question.hira.name] = question.hira;
         this.set(HIRA_STORAGE_KEY, hiraganas);
+    }
+
+    private hitRatio(h: { hits: number; misses: number }) {
+        const total = h.hits + h.misses;
+        if (total === 0) {
+            return 0;
+        }
+        return h.hits / total;
     }
 
     private mixAnswers(question: Question) {
