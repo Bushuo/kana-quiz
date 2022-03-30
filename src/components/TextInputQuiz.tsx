@@ -1,4 +1,12 @@
-import { Heading, Input, Stack, Text } from "@chakra-ui/react";
+import {
+    Button,
+    Heading,
+    Input,
+    InputGroup,
+    InputRightElement,
+    Stack,
+    Text,
+} from "@chakra-ui/react";
 import React from "react";
 import useQuiz from "../hooks/useQuiz";
 import HiraImage from "./HiraImage";
@@ -33,15 +41,27 @@ function TextInputQuiz() {
                     ""
                 )}
             </Stack>
-            <Input
-                ref={inputRef}
-                w="100"
-                onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                        processAnswer(e.currentTarget.value);
-                    }
-                }}
-            />
+            <InputGroup size="md" w="100">
+                <Input
+                    ref={inputRef}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            processAnswer(e.currentTarget.value);
+                        }
+                    }}
+                />
+                <InputRightElement width="4.5rem">
+                    <Button
+                        h="1.75rem"
+                        size="sm"
+                        onClick={() =>
+                            processAnswer(inputRef.current?.value ?? "")
+                        }
+                    >
+                        Enter
+                    </Button>
+                </InputRightElement>
+            </InputGroup>
         </>
     );
 }
