@@ -1,12 +1,4 @@
-import {
-    Box,
-    Button,
-    Flex,
-    Heading,
-    SimpleGrid,
-    Spacer,
-    Text,
-} from "@chakra-ui/react";
+import { Button, Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import React from "react";
 import { ServiceContext } from "../routes";
 import HiraImage from "./HiraImage";
@@ -35,18 +27,31 @@ function Statistics() {
                     </Button>
                 </Flex>
             </SimpleGrid>
-            <SimpleGrid w="100%" columns={10} spacing="2">
+            <SimpleGrid w="100%" columns={9} spacing="2">
                 {statistics.map((statistic, index) => (
                     <Flex flexDir="column" key={index}>
                         <Heading fontSize="xl" textAlign="center">
                             {statistic.name}
                         </Heading>
                         <HiraImage url={statistic.url} size="50px" />
-                        <Text>hits: {statistic.hits}</Text>
-                        <Text>misses: {statistic.misses}</Text>
-                        <Text>
-                            hit ratio: {(statistic.hitRatio * 100).toFixed(2)} %
-                        </Text>
+                        <Flex
+                            flexDir="column"
+                            p="2"
+                            bg="blackAlpha.100"
+                            borderRadius="0.375rem"
+                        >
+                            <Text>
+                                <Text as="strong">hits</Text> {statistic.hits}
+                            </Text>
+                            <Text>
+                                <Text as="strong">misses</Text>{" "}
+                                {statistic.misses}
+                            </Text>
+                            <Text>
+                                <Text as="strong">hit ratio</Text>{" "}
+                                {(statistic.hitRatio * 100).toFixed(2)} %
+                            </Text>
+                        </Flex>
                     </Flex>
                 ))}
             </SimpleGrid>
